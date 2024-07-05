@@ -6,11 +6,10 @@ public class PlayerAttack : MonoBehaviour
 {   
     
     [SerializeField] private Transform shootPoint;
-    [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float shootForce;
+    //[SerializeField] private GameObject bulletPrefab;
 
-    [SerializeField] private float rainShootCD;
-    [SerializeField] private int bulletPrefabpool;
+
+
     void Update()
     {   
         if (Input.GetButtonDown("Fire1"))
@@ -21,9 +20,11 @@ public class PlayerAttack : MonoBehaviour
     
     private void Attack()
     {
-        Instantiate(bulletPrefab,shootPoint.position,shootPoint.rotation);   
+        // Instantiate(bulletPrefab,shootPoint.position,shootPoint.rotation);   
+
+        //GameObject bullet = BulletPool.playerBulletInstance.NeedBullet();
+        //bullet.transform.position = transform.position;
+        //sbullet.transform.rotation = Quaternion.LookRotation;
     }
-
-
 
 }
