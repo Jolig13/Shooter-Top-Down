@@ -34,9 +34,10 @@ public class bulletScript : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy"))
         {   
-            Destroy(other.gameObject);
+            other.gameObject.SetActive(false);
             Destroy(this.gameObject);
             GameManager.Instance.Score();
+            AudioManager.AudioInstance.EnemyDestroy();
             //gameObject.SetActive(false);
             //other.gameObject.SetActive(false);
         }    

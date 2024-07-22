@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 134272134705703027}
   - component: {fileID: 1990768764770160247}
   - component: {fileID: 5356301030758099555}
-  - component: {fileID: 1321539289111543462}
+  - component: {fileID: 1587132763877988581}
   m_Layer: 0
-  m_Name: MeleeEnemy
+  m_Name: MeleeEnemy 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 2037659401
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9bfd6445a2f55624087fba92bf249f76, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3d478d445bfa7c94a9cd45c36ba35b3d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedMove: 15
---- !u!58 &1321539289111543462
+--- !u!58 &1587132763877988581
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

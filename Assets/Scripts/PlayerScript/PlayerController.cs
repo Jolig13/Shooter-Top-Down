@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Camera virtualCamera;
+    [SerializeField] private ParticleSystem enginePS;
 
     [Header("Limites")]
     [SerializeField] private float minX; 
@@ -22,15 +23,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxY;
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();   
+        rb = GetComponent<Rigidbody2D>();  
+        enginePS.Stop(); 
     }
 
     private void Update()
-    {
+    {   
+        
         if(Input.GetButtonDown("Fire1"))
         {
             Attack();
         }
+        GameManager.Instance.TimerGame();
     }
     private void FixedUpdate()
     {
@@ -44,12 +48,23 @@ public class PlayerController : MonoBehaviour
         inputY = Input.GetAxisRaw("Vertical");
         Vector2 movePlayer = new Vector2(inputX, inputY).normalized;
         rb.MovePosition(rb.position + movePlayer * speedMove * Time.deltaTime); 
+        //rb.AddForce(rb.position+movePlayer*speedMove,ForceMode2D.Force);
 
         Vector2 MouseDirection = virtualCamera.ScreenToWorldPoint(Input.mousePosition);
 
         Vector2 LookDirection = MouseDirection - rb.position;
         float angle = Mathf.Atan2(LookDirection.y, LookDirection.x) * Mathf.Rad2Deg - 90f;
         rb.rotation = angle;
+
+        if (movePlayer != Vector2.zero)
+        {
+            enginePS.Play();
+        }
+        else
+        {
+            enginePS.Stop();
+        }
+        
     }
     private void CheckLimits()
     {
@@ -62,7 +77,9 @@ public class PlayerController : MonoBehaviour
     }   
     private void Attack()
     {
-        Instantiate(bulletPrefab,shootPoint.position,shootPoint.rotation);   
+        Instantiate(bulletPrefab,shootPoint.position,shootPoint.rotation);  
+
+        AudioManager.AudioInstance.LaserPlayer(); 
 
         // GameObject bullet = BulletPool.playerBulletInstance.NeedBullet();
         // //bullet.transform.position = shootPoint.position;

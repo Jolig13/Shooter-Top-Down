@@ -38,9 +38,10 @@ public class MeleeEnemyScript : MonoBehaviour
         {   
             PlayerController playerInstance = other.gameObject.GetComponent<PlayerController>();
             {
-                GameManager.Instance.DamageReceive();
+                GameManager.Instance.DamageReceive();          
             }
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
+            AudioManager.AudioInstance.EnemyDestroy();
         }   
     }
 }   
