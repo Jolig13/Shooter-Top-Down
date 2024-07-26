@@ -30,17 +30,17 @@ public class bulletScript : MonoBehaviour
     }
     
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.CompareTag("Enemy"))
-        {   
-            other.gameObject.SetActive(false);
-            Destroy(this.gameObject);
-            GameManager.Instance.Score();
-            AudioManager.AudioInstance.EnemyDestroy();
-            //gameObject.SetActive(false);
-            //other.gameObject.SetActive(false);
-        }    
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if(other.gameObject.CompareTag("Enemy"))
+    //     {   
+    //         other.gameObject.SetActive(false);
+    //         Destroy(this.gameObject);
+    //         GameManager.Instance.Score();
+    //         AudioManager.AudioInstance.EnemyDestroy();
+    //         //gameObject.SetActive(false);
+    //         //other.gameObject.SetActive(false);
+    //     }    
 
-    }
+    // }
 }   

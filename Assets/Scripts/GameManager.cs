@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public GameObject[] lifeSprite;
+    [SerializeField] private float delay;
+    [SerializeField] private ParticleSystem playerDestroyFX;
+    private Transform player;
 
     private void Awake() 
     {
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         restTime = (min*60) + seg;
     }
 
@@ -46,7 +50,8 @@ public class GameManager : MonoBehaviour
             if(restTime < 1)
             {
                 startTime = false;
-                SceneManager.LoadScene(0);
+
+                //SceneManager.LoadScene(0);
             }
             int liveMin = Mathf.FloorToInt(restTime / 60);
             int liveSeg = Mathf.FloorToInt(restTime % 60);
@@ -60,7 +65,12 @@ public class GameManager : MonoBehaviour
         lifeSprite[life].SetActive(false);
         if(life == 0)
         {  
-            SceneManager.LoadScene(0);
+           //SceneManager.LoadScene(0);
+            Instantiate(playerDestroyFX,player.position,Quaternion.identity);
+            player.gameObject.SetActive(false);
+            
+            Invoke("RestarScene",delay);
+            
             AudioManager.AudioInstance.PlayerDestroy();
         }
     }
@@ -68,6 +78,10 @@ public class GameManager : MonoBehaviour
     {
         score ++;
         scoreText.text = score.ToString();
+    }
+    private void RestarScene()
+    {
+        SceneManager.LoadScene("GameScene");
     }
 
 }

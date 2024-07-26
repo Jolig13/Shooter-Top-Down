@@ -9,8 +9,10 @@ public class PlayerController : MonoBehaviour
     [Header("Movimiento")]
     private Rigidbody2D rb;
     private float inputX;
-    private float inputY;
-    [SerializeField] private float speedMove;
+    private float inputY; 
+    [SerializeField]private float baseSpeed;
+    [SerializeField] private float speedAceleration;
+    [SerializeField]private float moveSpeed;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Camera virtualCamera;
@@ -46,9 +48,15 @@ public class PlayerController : MonoBehaviour
     {
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
-        Vector2 movePlayer = new Vector2(inputX, inputY).normalized;
-        rb.MovePosition(rb.position + movePlayer * speedMove * Time.deltaTime); 
-        //rb.AddForce(rb.position+movePlayer*speedMove,ForceMode2D.Force);
+        moveSpeed = baseSpeed * speedAceleration * Time.deltaTime;
+        //Speed Limit
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity,moveSpeed);
+        //Add Speed, Aceleration for move
+        Vector2 movePlayer = new Vector2(inputX, inputY).normalized * moveSpeed;
+        rb.AddForce(movePlayer);
+        
+        //rb.MovePosition(rb.position+movePlayer*moveSpeed*Time.deltaTime);
+        
 
         Vector2 MouseDirection = virtualCamera.ScreenToWorldPoint(Input.mousePosition);
 
