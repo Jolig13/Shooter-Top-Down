@@ -12,11 +12,12 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawn;
     private Transform player;
     private Coroutine spawnCoroutine;
-
+    private bool canSpawn = true;
     void Start()
     {   
         player = GameObject.FindGameObjectWithTag("Player").transform;
         spawnCoroutine = StartCoroutine(Enemyspawner());
+        
     }
     void Update()
     {   
@@ -24,13 +25,12 @@ public class EnemySpawner : MonoBehaviour
         {
             StopCoroutine(spawnCoroutine);
         }
-        
     }
 
-    IEnumerator Enemyspawner()
-     { 
+    public IEnumerator Enemyspawner()
+    { 
         spawn = timeSpawn;
-        while (true)
+        while (canSpawn)
         {   
             //Instantiate(enemyPrefab[Random.Range(0,enemyPrefab.Length)],spawner[Random.Range(0,spawner.Length)].position,Quaternion.identity);
             GameObject enemy = EnemyPool.EnemyInstance.NeedEnemys();
@@ -38,5 +38,11 @@ public class EnemySpawner : MonoBehaviour
             spawn = Mathf.Max(minimunSpawn,spawn-decreaseTimeSpawn*Time.deltaTime);
             yield return new WaitForSeconds(spawn);
         }
-     }
+
+    }
+    public void Spawning()
+    {
+        canSpawn = false;
+    }
 }
+

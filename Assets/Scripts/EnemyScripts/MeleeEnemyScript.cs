@@ -15,7 +15,6 @@ public class MeleeEnemyScript : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (target != null)
@@ -41,26 +40,32 @@ public class MeleeEnemyScript : MonoBehaviour
             {
                 GameManager.Instance.DamageReceive();           
             }
-            Instantiate(shipDestroyed,transform.position,Quaternion.identity); 
+            DeathFX();
+            //Instantiate(shipDestroyed,transform.position,Quaternion.identity); 
             this.gameObject.SetActive(false);
-            AudioManager.AudioInstance.EnemyDestroy();
-            
+          
         }   
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("playerBullet"))
         {   
-            Instantiate(shipDestroyed,transform.position,Quaternion.identity);
+            DeathFX();
+            //Instantiate(shipDestroyed,transform.position,Quaternion.identity);
             this.gameObject.SetActive(false);
             Destroy(other.gameObject);
             //Destroy(this.gameObject);
             GameManager.Instance.Score();
-            AudioManager.AudioInstance.EnemyDestroy();
+            
             
             //gameObject.SetActive(false);
             //other.gameObject.SetActive(false);
         }    
 
+    }
+    public void DeathFX()
+    {
+        Instantiate(shipDestroyed,transform.position,Quaternion.identity);
+        AudioManager.AudioInstance.EnemyDestroy();
     }
 }   

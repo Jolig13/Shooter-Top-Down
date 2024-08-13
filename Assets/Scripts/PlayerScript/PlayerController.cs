@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Camera virtualCamera;
     [SerializeField] private ParticleSystem enginePS;
-
     [Header("Limites")]
     [SerializeField] private float minX; 
     [SerializeField] private float maxX;
@@ -30,8 +29,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Update()
-    {   
-        
+    {     
         if(Input.GetButtonDown("Fire1"))
         {
             Attack();
@@ -95,5 +93,10 @@ public class PlayerController : MonoBehaviour
         // Vector3 MouseAim = virtualCamera.ScreenToWorldPoint(Input.mousePosition);
         // Vector3 AimDirection = MouseAim - shootPoint.position;
         // bullet.transform.rotation = Quaternion.LookRotation(AimDirection);
+    }
+    public void StopActions()
+    {
+        rb.isKinematic = true;
+        enabled = false;
     }
 }
