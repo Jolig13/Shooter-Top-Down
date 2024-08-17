@@ -35,7 +35,7 @@ public class EnemyBullet : MonoBehaviour
         {   
             PlayerController playerInstance = other.gameObject.GetComponent<PlayerController>();
             {
-                GameManager.Instance.DamageReceive(); 
+                //GameManager.Instance.DamageReceive(); 
                 gameObject.SetActive(false);
             }
 

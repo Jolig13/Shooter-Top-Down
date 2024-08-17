@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 415844837}
   - component: {fileID: 415844836}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ButtonExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1683380262}
-        m_TargetAssemblyTypeName: CanvasStartScene, Assembly-CSharp
+        m_TargetAssemblyTypeName: CanvasManager, Assembly-CSharp
         m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 1048746094}
   - component: {fileID: 1048746093}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ButtonStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,9 +384,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -407,7 +407,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1683380262}
-        m_TargetAssemblyTypeName: CanvasStartScene, Assembly-CSharp
+        m_TargetAssemblyTypeName: CanvasManager, Assembly-CSharp
         m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
@@ -438,12 +438,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -850,7 +850,7 @@ MonoBehaviour:
   victoryCanvas: {fileID: 0}
   defeatCanvas: {fileID: 0}
   pauseCanvas: {fileID: 0}
-  pauseButton: {fileID: 0}
+  delay: 0
 --- !u!82 &1683380263
 AudioSource:
   m_ObjectHideFlags: 0
@@ -869,7 +869,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 53
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

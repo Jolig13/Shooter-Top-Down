@@ -4,28 +4,19 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum GameState 
-{
-    Playing,
-    Paused,
-    Victory,
-    Defeat
-}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
-    private GameState gameState;
-    private int life;
     private int score;
     private float restTime;
     private bool startTime = false;
     public int min,seg;
     public TextMeshProUGUI textTime;
     public TextMeshProUGUI scoreText;
-    public GameObject[] lifeSprite;
-    [SerializeField] private ParticleSystem playerDestroyFX;
     private Transform player;
     private EnemySpawner enemySpawner;
+    private bool isPaused;
     private void Awake() 
     {
         if(Instance == null)
@@ -43,33 +34,36 @@ public class GameManager : MonoBehaviour
     }
     private void Start() 
     {
-        life = 3;  
         score = 0; 
         startTime = true;
+        ResumeGame();
     }   
     private void Update()
     {
-        switch(gameState)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            case GameState.Playing:
-                if(Input.GetKeyDown(KeyCode.Escape) && life > 0)
-                {
-                    gameState = GameState.Paused;
-                    CanvasManager.CanvasInstance.PauseMenu();
-                }
-            break;
-            case GameState.Paused:
-                if (Input.GetKeyDown(KeyCode.Escape) && life > 0)
-                {
-                    gameState = GameState.Playing;
-                    CanvasManager.CanvasInstance.ResumenMenu();
-                }    
-            break;
-            case GameState.Victory:            
-            break;
-            case GameState.Defeat:
-            break;
+            isPaused = !isPaused;
+            PausedGame();
         }
+    }
+
+    private void PausedGame()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 0f;
+            CanvasManager.CanvasInstance.PauseMenu();
+        }
+        else 
+        {
+            Time.timeScale = 1f;
+            CanvasManager.CanvasInstance.ResumenMenu();
+        }
+    }
+    private void ResumeGame()
+    {
+        isPaused = false;
+        PausedGame();
     }
     public void TimerGame() 
     {
@@ -87,28 +81,13 @@ public class GameManager : MonoBehaviour
             textTime.text = string.Format("{00:00}:{01:00}",liveMin,liveSeg);
         }  
     }
-
-    public void DamageReceive()
-    {
-        life --;
-        lifeSprite[life].SetActive(false);
-        if(life == 0)
-        {   
-            player.gameObject.SetActive(false);
-            PlayerDeathFX();
-            CanvasManager.CanvasInstance.DefeatMenu();
-            enemySpawner.Spawning();
-        }
+    public void LoseGame()
+    {   
+        enemySpawner.Spawning();           
     }
     public void Score()
     {
         score ++;
         scoreText.text = score.ToString();
     }
-    private void PlayerDeathFX()
-    {
-        AudioManager.AudioInstance.PlayerDestroy();
-        Instantiate(playerDestroyFX,player.position,Quaternion.identity);
-    }
-
 }

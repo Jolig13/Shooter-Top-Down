@@ -57,13 +57,11 @@ public class CanvasManager : MonoBehaviour
         SceneManager.LoadScene("StartScene");
     }
     public void PauseMenu()
-    {   
-        Time.timeScale = 0;
+    {    
         pauseCanvas.SetActive(true);
     }
     public void ResumenMenu()
     {   
-        Time.timeScale = 1;
         pauseCanvas.SetActive(false); 
     }
 

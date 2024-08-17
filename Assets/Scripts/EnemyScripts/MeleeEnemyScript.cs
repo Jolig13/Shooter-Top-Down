@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeEnemyScript : MonoBehaviour
+public class MeleeEnemyScript : MonoBehaviour, IDamageReceive
 {   
     private Rigidbody2D rb2D;
     private Transform target;
     [SerializeField] private float speedMove;
     [SerializeField] private ParticleSystem shipDestroyed;
+
+    [SerializeField] private int damage = 10;
+    [SerializeField] private GameObject expItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,9 +39,12 @@ public class MeleeEnemyScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {   
-            PlayerController playerInstance = other.gameObject.GetComponent<PlayerController>();
+            IDamageReceive player = other.gameObject.GetComponent<IDamageReceive>();
             {
-                GameManager.Instance.DamageReceive();           
+                if(player != null)
+                {
+                    player.ReceiveDamage(damage);
+                }
             }
             DeathFX();
             //Instantiate(shipDestroyed,transform.position,Quaternion.identity); 
@@ -50,16 +56,13 @@ public class MeleeEnemyScript : MonoBehaviour
     {
         if(other.gameObject.CompareTag("playerBullet"))
         {   
-            DeathFX();
-            //Instantiate(shipDestroyed,transform.position,Quaternion.identity);
-            this.gameObject.SetActive(false);
+            ReceiveDamage();
+            //Instantiate(shipDestroyed,transform.position,Quaternion.identity);    
             Destroy(other.gameObject);
-            //Destroy(this.gameObject);
-            GameManager.Instance.Score();
-            
-            
+            //Destroy(this.gameObject); 
             //gameObject.SetActive(false);
             //other.gameObject.SetActive(false);
+            Instantiate(expItem,transform.position,Quaternion.identity);
         }    
 
     }
@@ -67,5 +70,11 @@ public class MeleeEnemyScript : MonoBehaviour
     {
         Instantiate(shipDestroyed,transform.position,Quaternion.identity);
         AudioManager.AudioInstance.EnemyDestroy();
+    }
+    public void ReceiveDamage()
+    {
+        DeathFX();
+        this.gameObject.SetActive(false);
+        GameManager.Instance.Score();
     }
 }   
