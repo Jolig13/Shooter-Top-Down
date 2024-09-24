@@ -14,9 +14,10 @@ public class GameManager : MonoBehaviour
     public int min,seg;
     public TextMeshProUGUI textTime;
     public TextMeshProUGUI scoreText;
-    private Transform player;
-    private EnemySpawner enemySpawner;
+    private EnemySpawnerManager enemySpawner;
+    private ChestSpawnerManager chestManager;
     private bool isPaused;
+    
     private void Awake() 
     {
         if(Instance == null)
@@ -28,8 +29,8 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        enemySpawner = FindObjectOfType<EnemySpawner>();
+        enemySpawner = FindObjectOfType<EnemySpawnerManager>();
+        chestManager = FindObjectOfType<ChestSpawnerManager>();
         restTime = (min*60) + seg;
     }
     private void Start() 
@@ -55,12 +56,12 @@ public class GameManager : MonoBehaviour
             CanvasManager.CanvasInstance.PauseMenu();
         }
         else 
-        {
+        {   
             Time.timeScale = 1f;
             CanvasManager.CanvasInstance.ResumenMenu();
         }
     }
-    private void ResumeGame()
+    public void ResumeGame()
     {
         isPaused = false;
         PausedGame();
@@ -74,7 +75,8 @@ public class GameManager : MonoBehaviour
             {
                 startTime = false;
                 CanvasManager.CanvasInstance.VictoryMenu();
-                enemySpawner.Spawning();      
+                enemySpawner.StopEnemySpawning();   
+                chestManager.StopChestSpawning();   
             }
             int liveMin = Mathf.FloorToInt(restTime / 60);
             int liveSeg = Mathf.FloorToInt(restTime % 60);
@@ -83,11 +85,17 @@ public class GameManager : MonoBehaviour
     }
     public void LoseGame()
     {   
-        enemySpawner.Spawning();           
+        enemySpawner.StopEnemySpawning();  
+        chestManager.StopChestSpawning();         
     }
     public void Score()
     {
         score ++;
         scoreText.text = score.ToString();
+    }
+    public void UpgradeMenu()
+    {
+        isPaused = true;
+        PausedGame();
     }
 }

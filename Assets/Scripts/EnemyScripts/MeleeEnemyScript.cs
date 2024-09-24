@@ -35,8 +35,8 @@ public class MeleeEnemyScript : MonoBehaviour, IDamageReceive
         rb2D.rotation = angle;
     }
 
-    private void OnCollisionEnter2D(Collision2D other) 
-    {
+    private void OnTriggerEnter2D(Collider2D other)
+    {   
         if (other.gameObject.CompareTag("Player"))
         {   
             IDamageReceive player = other.gameObject.GetComponent<IDamageReceive>();
@@ -50,10 +50,7 @@ public class MeleeEnemyScript : MonoBehaviour, IDamageReceive
             //Instantiate(shipDestroyed,transform.position,Quaternion.identity); 
             this.gameObject.SetActive(false);
           
-        }   
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+        } 
         if(other.gameObject.CompareTag("playerBullet"))
         {   
             ReceiveDamage();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {   
@@ -10,6 +11,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private GameObject defeatCanvas;
     [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private float delay;
+
     private void Awake()
     {
         if (CanvasInstance == null)
@@ -20,10 +22,6 @@ public class CanvasManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-    private void Start() 
-    {
-        
     }
     public void StartGame()
     {
@@ -72,6 +70,6 @@ public class CanvasManager : MonoBehaviour
     private void ShowDefeatCanvas()
     {
         defeatCanvas.SetActive(true);
-    }
+    }  
 }
 

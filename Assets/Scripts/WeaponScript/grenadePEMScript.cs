@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffSpawners : MonoBehaviour
+public class grenadePEMScript : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

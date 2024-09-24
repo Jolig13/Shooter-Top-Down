@@ -11,11 +11,9 @@ public class PlayerController : MonoBehaviour, IDamageReceive
     private Rigidbody2D rb;
     private float inputX;
     private float inputY; 
-    [SerializeField]private float baseSpeed;
+    [SerializeField] private float baseSpeed;
     [SerializeField] private float speedAceleration;
-    [SerializeField]private float moveSpeed;
-    [SerializeField] private Transform shootPoint;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float moveSpeed;    
     [SerializeField] private Camera virtualCamera;
     [SerializeField] private ParticleSystem enginePS;
     [Header("Limites")]
@@ -24,20 +22,24 @@ public class PlayerController : MonoBehaviour, IDamageReceive
     [SerializeField] private float minY;
     [SerializeField] private float maxY;
     [Header("Vida Jugador")]
-    [SerializeField] private float maxHealth = 100;
-    [SerializeField] private float currentHealth;
+    [HideInInspector] public float maxHealth = 100;
+    [SerializeField] public float currentHealth;
     [SerializeField] private ParticleSystem playerDeadFX;
-    [SerializeField] private Slider healthBar;
+    public Slider healthBar;
     [SerializeField] private float smooth = 0.25f;
-    [SerializeField] private float growthHealthUp =2.5f;
-    [Header("Niveles Jugador")]
-    [SerializeField] private int currentLevel = 1;
-    [SerializeField] private float actualExperience = 0f;
-    [SerializeField] private float experienceForLevelUp = 200f;
-    [SerializeField] private float growthExperienceLevelUp = 2f;
-    [SerializeField] private Slider expBar;
-    [SerializeField] private ParticleSystem levelUpFX;
-    [SerializeField] private int levelMax = 18;
+    public float growthHealthUp =2.5f;
+
+    private void Awake() 
+    {
+        if (playerInstance == null)
+        {
+            playerInstance = this;
+        }   
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -46,19 +48,11 @@ public class PlayerController : MonoBehaviour, IDamageReceive
         currentHealth = maxHealth;
         healthBar.maxValue = maxHealth;
         healthBar.value = currentHealth;
-        expBar.maxValue = experienceForLevelUp;
-        expBar.value = actualExperience;
-
     }
 
     private void Update()
     {     
-        if(Input.GetButtonDown("Fire1"))
-        {
-            Attack();
-        }
         healthBar.value = Mathf.Lerp(healthBar.value,currentHealth,smooth* Time.deltaTime);
-        expBar.value = Mathf.Lerp(expBar.value,actualExperience,smooth* Time.deltaTime);
         GameManager.Instance.TimerGame();
     }
     private void FixedUpdate()
@@ -106,19 +100,6 @@ public class PlayerController : MonoBehaviour, IDamageReceive
 
         transform.position = playerPosition;
     }   
-    private void Attack()
-    {
-        Instantiate(bulletPrefab,shootPoint.position,shootPoint.rotation);  
-
-        AudioManager.AudioInstance.LaserPlayer(); 
-
-        // GameObject bullet = BulletPool.playerBulletInstance.NeedBullet();
-        // //bullet.transform.position = shootPoint.position;
-
-        // Vector3 MouseAim = virtualCamera.ScreenToWorldPoint(Input.mousePosition);
-        // Vector3 AimDirection = MouseAim - shootPoint.position;
-        // bullet.transform.rotation = Quaternion.LookRotation(AimDirection);
-    }
 
     public void ReceiveDamage(int damage)
     {
@@ -139,40 +120,5 @@ public class PlayerController : MonoBehaviour, IDamageReceive
         CanvasManager.CanvasInstance.DefeatMenu();
         AudioManager.AudioInstance.PlayerDestroy();
         GameManager.Instance.LoseGame();
-    }
-
-    public void ObtainExperience(int expAmount)
-    {   
-        if(currentLevel < levelMax)
-        {
-            actualExperience += expAmount;
-            expBar.value = actualExperience;
-            if(actualExperience >= experienceForLevelUp)
-            {
-                IncreaseLevel();
-            }
-        }
-    }
-    private void IncreaseLevel()
-    {   
-
-        Instantiate(levelUpFX,transform.position,Quaternion.identity);
-        currentLevel ++;
-        actualExperience -= experienceForLevelUp;
-        if(currentLevel < levelMax)
-        {
-            experienceForLevelUp *= growthExperienceLevelUp;
-            expBar.maxValue = experienceForLevelUp;
-            expBar.value = actualExperience;
-            maxHealth *= growthHealthUp;
-            healthBar.maxValue = maxHealth;
-            currentHealth = maxHealth;
-        }
-        else
-        {
-            expBar.value = experienceForLevelUp;
-            currentHealth = maxHealth;
-        }
-
     }
 }

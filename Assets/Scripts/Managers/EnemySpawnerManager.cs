@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawnerManager : MonoBehaviour
 {
     //[SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform[] spawner;
@@ -11,23 +11,23 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float minimunSpawn;
     [SerializeField] private float spawn;
     private Transform player;
-    private Coroutine spawnCoroutine;
+    //private Coroutine spawnCoroutine;
     private bool canSpawn = true;
+    
     void Start()
     {   
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        spawnCoroutine = StartCoroutine(Enemyspawner());
-        
+        StartCoroutine(Enemyspawner());
     }
     void Update()
     {   
         if(player == null)
         {
-            StopCoroutine(spawnCoroutine);
+           StopEnemySpawning();
         }
     }
 
-    public IEnumerator Enemyspawner()
+    private IEnumerator Enemyspawner()
     { 
         spawn = timeSpawn;
         while (canSpawn)
@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
     }
-    public void Spawning()
+    public void StopEnemySpawning()
     {
         canSpawn = false;
     }
