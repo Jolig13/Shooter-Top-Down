@@ -10,7 +10,6 @@ public class MeleeEnemyScript : MonoBehaviour, IDamageReceive
     [SerializeField] private ParticleSystem shipDestroyed;
 
     [SerializeField] private int damage = 10;
-    [SerializeField] private GameObject expItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +58,7 @@ public class MeleeEnemyScript : MonoBehaviour, IDamageReceive
             //Destroy(this.gameObject); 
             //gameObject.SetActive(false);
             //other.gameObject.SetActive(false);
-            Instantiate(expItem,transform.position,Quaternion.identity);
+           
         }    
 
     }

@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI textTime;
     public TextMeshProUGUI scoreText;
     private EnemySpawnerManager enemySpawner;
-    private ChestSpawnerManager chestManager;
     private bool isPaused;
     
     private void Awake() 
@@ -30,7 +29,6 @@ public class GameManager : MonoBehaviour
         }
 
         enemySpawner = FindObjectOfType<EnemySpawnerManager>();
-        chestManager = FindObjectOfType<ChestSpawnerManager>();
         restTime = (min*60) + seg;
     }
     private void Start() 
@@ -75,8 +73,7 @@ public class GameManager : MonoBehaviour
             {
                 startTime = false;
                 CanvasManager.CanvasInstance.VictoryMenu();
-                enemySpawner.StopEnemySpawning();   
-                chestManager.StopChestSpawning();   
+                enemySpawner.StopEnemySpawning();     
             }
             int liveMin = Mathf.FloorToInt(restTime / 60);
             int liveSeg = Mathf.FloorToInt(restTime % 60);
@@ -85,8 +82,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoseGame()
     {   
-        enemySpawner.StopEnemySpawning();  
-        chestManager.StopChestSpawning();         
+        enemySpawner.StopEnemySpawning();          
     }
     public void Score()
     {

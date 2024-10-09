@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5109018747871583542}
   - component: {fileID: 3325286839238507061}
-  - component: {fileID: 2481424241843745680}
   m_Layer: 0
   m_Name: Drone
   m_TagString: Untagged
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5c583191cc564dc4f8e993670268daf4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca2d2ccd458f12b458b0f222e74d056f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,21 +84,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2481424241843745680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1245210097717040342}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad9d53a27d9709b4f97bcaf5952f2983, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 51762e28c1ffcec47bd6fd85e78191ba, type: 2}
-  level: 1
-  maxLevel: 5
-  timeToAttack: 10
-  rotationSpeed: 30
-  bulletPrefab: {fileID: 8796877610830944310, guid: 601ef94d23971ec46b5d808bc95d2aed, type: 3}
